@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard – Financial Readiness System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <span class="system-name">Financial Readiness System</span>
+        <span class="system-tag">User Dashboard</span>
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="hero" style="text-align:left;">
+        <h2>Welcome</h2>
+        <p class="subtitle">
+            Logged in as <strong>{{ user }}</strong>
+        </p>
+    </div>
+
+    <!-- SUMMARY CARDS -->
+    <div class="cards">
+
+        <div class="card">
+            <h3>Latest Readiness Score</h3>
+            {% if last_score %}
+                <p style="font-size:30px; font-weight:800;">
+                    {{ last_score }}/100
+                    {% if trend == "up" %}
+                        <span style="color:#16a34a;">↑</span>
+                    {% elif trend == "down" %}
+                        <span style="color:#dc2626;">↓</span>
+                    {% else %}
+                        <span style="color:#6b7280;">→</span>
+                    {% endif %}
+                </p>
+                <p style="font-size:14px; color:#555;">{{ trend_message }}</p>
+            {% else %}
+                <p>No assessments yet</p>
+            {% endif %}
+        </div>
+
+        <div class="card">
+            <h3>Financial Profile</h3>
+            <p style="font-size:18px; font-weight:600;">
+                {{ last_profile if last_profile else "Not evaluated yet" }}
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>Total Assessments</h3>
+            <p style="font-size:30px; font-weight:800;">
+                {{ assessment_count }}
+            </p>
+        </div>
+
+    </div>
+
+    <!-- RECOMMENDED FOCUS -->
+    <div class="section info-box">
+        <h3>Recommended Focus</h3>
+        <p>{{ next_action }}</p>
+    </div>
+
+    <!-- ✅ PERSONALIZED INSIGHT -->
+    <div class="section info-box">
+        <h3>Personalized Insight</h3>
+        <p>{{ personal_message }}</p>
+        <p style="font-size:13px; color:#666;">
+            Generated from your past readiness trends.
+        </p>
+    </div>
+
+    <!-- TREND GRAPH -->
+    {% if assessment_count is defined and assessment_count > 1 %}
+
+    <div class="section">
+        <h3>Readiness Trend</h3>
+        <img src="{{ url_for('static', filename='plots/dashboard_trend.png') }}"
+             style="max-width:360px;">
+    </div>
+    {% endif %}
+
+    <!-- ASSESSMENT FORM -->
+    <div class="section">
+        <h3>Start New Financial Readiness Assessment</h3>
+        {% if errors %}
+<div class="error-box" style="margin-bottom: 25px;">
+    <ul>
+        {% for error in errors %}
+            <li>⚠ {{ error }}</li>
+        {% endfor %}
+    </ul>
+</div>
+<script>
+    window.scrollTo({ top: 0, behavior: "smooth" });
+</script>
+
+{% endif %}
+
+        <form action="/analyze" method="post" class="form-box">
+
+            <label>Assessment Month</label>
+            <input type="month" name="month" required>
+
+            <label>Monthly Income</label>
+            <input type="number" name="income" required>
+
+            <label>Fixed Expenses</label>
+            <input type="number" name="fixed_expenses" required>
+
+            <label>Variable Expenses</label>
+            <input type="number" name="variable_expenses" required>
+
+            <label>Planned Savings</label>
+            <input type="number" name="intended_savings" required>
+
+            <label>Emergency Fund?</label>
+            <select name="emergency_fund">
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+
+            <button type="submit">Run Readiness Evaluation</button>
+        </form>
+    </div>
+    <div class="dashboard-links">
+    <a href="/history" class="history-link">📊 View Readiness History</a>
+    &nbsp;
+    <a href="/about" class="history-link">ℹ About</a>
+</div>
+
+    
+
+
+    <div class="section">
+        <a href="/logout">Logout</a>
+    </div>
+
+</div>
+
+</body>
+</html>

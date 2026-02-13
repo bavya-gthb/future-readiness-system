@@ -1,0 +1,5 @@
+month,income,fixed_expenses,variable_expenses,intended_savings,actual_savings,emergency_fund
+Jan-26,30000,18000,9000,5000,2000,No
+Feb-26,30000,18000,8000,5000,3000,No
+Mar-26,32000,18000,10000,6000,1000,No
+Apr-26,35000,18000,9000,7000,4000,Yes

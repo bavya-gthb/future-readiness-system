@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Readiness History – Financial Readiness System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+    <div class="topbar-inner">
+        <span class="system-name">Financial Readiness System</span>
+        <span class="system-tag">History</span>
+    </div>
+</div>
+
+<div class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div id="toast-container">
+      {% for category, message in messages %}
+        <div class="toast toast-{{ category }}">
+          ✅ {{ message }}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+
+    <h2>Monthly Readiness History</h2>
+    <p class="subtitle">
+        Past financial readiness evaluations (summary view)
+    </p>
+
+    <!-- ===== SUMMARY SECTION ===== -->
+    {% if best_month and worst_month %}
+    <div class="section info-box">
+        <h3>History Insight Summary</h3>
+
+        <p>
+            <strong>Best Month:</strong>
+            {{ best_month[0] }} — {{ best_month[1] }}/100 ({{ best_month[2] }})
+        </p>
+
+        <p>
+            <strong>Lowest Month:</strong>
+            {{ worst_month[0] }} — {{ worst_month[1] }}/100 ({{ worst_month[2] }})
+        </p>
+
+        <p>
+            <strong>Overall Trend:</strong>
+            {{ trend_summary }}
+        </p>
+    </div>
+    {% endif %}
+
+    <!-- ===== HISTORY TABLE ===== -->
+    {% if records %}
+        <table style="width:100%; border-collapse:collapse; margin-top:25px;">
+            <tr style="border-bottom:2px solid #e5e7eb;">
+                <th style="text-align:left; padding-bottom:10px;">Month</th>
+                <th style="text-align:left;">Score</th>
+                <th style="text-align:left;">Level</th>
+                <th style="text-align:left;">Profile</th>
+                <th style="text-align:left;">Key Risk</th>
+            </tr>
+
+            {% for i in range(records|length) %}
+            <tr
+                {% if best_month and records[i][0] == best_month[0] %}
+                    style="background:#ecfdf5;"
+                {% elif worst_month and records[i][0] == worst_month[0] %}
+                    style="background:#fef2f2;"
+                {% endif %}
+            >
+                <td style="padding:10px 0;">
+                    {{ records[i][0] }}
+                </td>
+
+                <td>
+                    {{ records[i][1] }}/100
+                    {% if i > 0 %}
+                        {% if records[i][1] > records[i-1][1] %}
+                            <span style="color:#16a34a;">↑</span>
+                        {% elif records[i][1] < records[i-1][1] %}
+                            <span style="color:#dc2626;">↓</span>
+                        {% else %}
+                            <span style="color:#6b7280;">→</span>
+                        {% endif %}
+                    {% endif %}
+                </td>
+
+                <td>{{ records[i][2] }}</td>
+                <td>{{ records[i][3] }}</td>
+                <td>{{ records[i][4] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <form action="/download_history_pdf" method="post" style="margin-top:20px;">
+    <button type="submit">
+        📄 Download History Report (PDF)
+    </button>
+</form>
+
+        <!-- ===== CLEAR HISTORY ===== -->
+        <form action="/clear_history" method="post"
+              onsubmit="return confirm('Are you sure you want to permanently clear all your readiness history?');"
+              style="margin-top:30px;">
+            <button type="submit"
+                    style="background:#dc2626; color:white; border:none; padding:10px 16px; border-radius:8px;">
+                🧹 Clear My History
+            </button>
+        </form>
+
+    {% else %}
+        <p>No history available yet.</p>
+    {% endif %}
+
+    <div style="margin-top:30px;">
+        <a href="/dashboard">← Back to Dashboard</a>
+    </div>
+
+</div>
+
+</body>
+</html>

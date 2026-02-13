@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login – Financial Readiness System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="auth-wrapper">
+
+    <!-- LEFT BRAND PANEL -->
+    <div class="auth-brand">
+        <h1>Financial Readiness System</h1>
+        <p class="brand-tagline">
+            A smart way to understand, plan, and strengthen your financial future.
+        </p>
+
+        <ul class="brand-points">
+            <li>✔ Private financial evaluation</li>
+            <li>✔ Behavioral readiness analysis</li>
+            <li>✔ Month-wise progress tracking</li>
+            <li>✔ Designed for families & individuals</li>
+        </ul>
+    </div>
+
+    <!-- RIGHT LOGIN PANEL -->
+    <div class="auth-form-area">
+        <div class="auth-card">
+            <h2>Sign In</h2>
+            <p class="auth-subtitle">
+                Access your personal financial readiness dashboard
+            </p>
+
+            <form method="post">
+                <label>Email Address</label>
+                <input type="email" name="email" placeholder="you@example.com" required>
+
+                <label>Password</label>
+                <input type="password" name="password" placeholder="••••••••" required>
+
+                <button type="submit">Login Securely</button>
+            </form>
+
+            <p class="auth-footer">
+                New here?
+                <a href="/signup">Create an account</a>
+            </p>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Future Readiness Scoring System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+
+    <!-- HERO -->
+    <header class="hero">
+        <h1>Are You Financially Ready for Tomorrow?</h1>
+        <p>
+            Most people earn money.  
+            Very few are actually prepared for the future.
+        </p>
+        <p class="hero-sub">
+            This tool helps you understand your financial readiness —  
+            clearly, honestly, and with practical next steps.
+        </p>
+    </header>
+
+    <!-- VALUE CARDS -->
+    <div class="cards">
+        <div class="card">
+            <h3>📊 Know Your Readiness</h3>
+            <p>
+                Get a clear score based on your income, expenses,
+                savings behavior, and emergency preparedness.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>🔍 Understand Weak Areas</h3>
+            <p>
+                See exactly where you are losing points
+                and why your savings plan may not be working.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>🔮 See Your Future</h3>
+            <p>
+                Try small changes and instantly see how
+                your financial readiness improves.
+            </p>
+        </div>
+    </div>
+
+    <!-- FORM INTRO -->
+    <div class="section form-intro">
+        <h2>Check Your Monthly Financial Readiness</h2>
+        <p>
+            Enter your details below.  
+            No login. No data saved. Just insight.
+        </p>
+    </div>
+
+    <!-- ERRORS -->
+    {% if errors %}
+        <div class="section error-box">
+            <ul>
+                {% for error in errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <!-- FORM -->
+    <form action="/analyze" method="post" class="form-box">
+
+        <label>Monthly Income</label>
+        <input type="number" name="income" required>
+
+        <label>Fixed Expenses (Rent, EMIs, Bills)</label>
+        <input type="number" name="fixed_expenses" required>
+
+        <label>Variable Expenses (Food, Travel, Others)</label>
+        <input type="number" name="variable_expenses" required>
+
+        <label>Planned Savings</label>
+        <input type="number" name="intended_savings" required>
+
+        <label>Emergency Fund Available?</label>
+        <select name="emergency_fund">
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+
+        <button type="submit">Analyze My Financial Readiness</button>
+
+    </form>
+
+</div>
+
+</body>
+</html>

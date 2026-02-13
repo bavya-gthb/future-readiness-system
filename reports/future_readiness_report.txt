@@ -1,0 +1,34 @@
+FUTURE READINESS REPORT
+==============================
+
+Month: Jan-26
+Readiness Score: 15 (Low)
+Resistance Reason: Income is sufficient, but spending habits block savings.
+Insights:
+- Low savings rate indicates weak saving discipline.
+- High expenses are consuming most of the income.
+- Planned savings were not fully achieved.
+- Lack of emergency fund reduces future security.
+
+Month: Feb-26
+Readiness Score: 40 (Medium)
+Resistance Reason: No strong resistance detected.
+Insights:
+- High expenses are consuming most of the income.
+- Planned savings were not fully achieved.
+- Lack of emergency fund reduces future security.
+
+Month: Mar-26
+Readiness Score: 15 (Low)
+Resistance Reason: Income is sufficient, but spending habits block savings.
+Insights:
+- Low savings rate indicates weak saving discipline.
+- High expenses are consuming most of the income.
+- Planned savings were not fully achieved.
+- Lack of emergency fund reduces future security.
+
+Month: Apr-26
+Readiness Score: 65 (Medium)
+Resistance Reason: No strong resistance detected.
+Insights:
+- Planned savings were not fully achieved.

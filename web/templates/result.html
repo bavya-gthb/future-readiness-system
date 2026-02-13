@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Financial Readiness Evaluation Report</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<!-- REPORT HEADER -->
+<div class="topbar">
+    <div class="topbar-inner">
+        <span class="system-name">Financial Readiness System</span>
+        <span class="system-tag">Official Evaluation Report</span>
+    </div>
+</div>
+
+<div class="container report-container">
+
+    <!-- REPORT TITLE -->
+    <div class="report-header">
+        <h2>Financial Readiness Evaluation</h2>
+        <p class="report-subtitle">
+            Generated financial preparedness assessment
+        </p>
+    </div>
+
+    <!-- SCORE SUMMARY -->
+    <div class="result-summary report-block">
+        <div class="score-circle {{ level|lower }}">
+            {{ score }}/100
+        </div>
+        <div>
+            <p class="report-label">Overall Readiness Level</p>
+            <h3 class="report-status">{{ level }}</h3>
+        </div>
+    </div>
+
+    <!-- PROFILE -->
+    <div class="report-section">
+        <h3>Financial Personality Profile</h3>
+        <p><strong>{{ financial_profile }}</strong></p>
+    </div>
+
+    <!-- INTERPRETATION -->
+    <div class="report-section">
+        <h3>Evaluation Interpretation</h3>
+        <p>
+            <strong>Primary Resistance Identified:</strong><br>
+            {{ resistance }}
+        </p>
+    </div>
+
+    <!-- INSIGHTS -->
+    <div class="report-section">
+        <h3>Key Behavioral Insights</h3>
+        <ul>
+            {% for insight in insights %}
+                <li>{{ insight }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- ACTION PLAN -->
+    <div class="report-section">
+        <h3>Personalized Action Plan</h3>
+
+        {% if resistance %}
+            <p>
+                <strong>Primary Focus:</strong><br>
+                {{ resistance }}
+            </p>
+        {% endif %}
+
+        <ul>
+            {% if "variable" in resistance.lower() %}
+                <li>Reduce variable expenses by at least 10–15% next month</li>
+            {% endif %}
+
+            {% if "emergency" in resistance.lower() %}
+                <li>Build an emergency fund covering 3 months of expenses</li>
+            {% endif %}
+
+            {% if "savings" in resistance.lower() %}
+                <li>Automate savings immediately after income is received</li>
+            {% endif %}
+        </ul>
+
+        <p style="margin-top:12px; color:#555;">
+            This plan is generated based on your current financial behavior and past outcomes.
+        </p>
+    </div>
+
+    <!-- 🧠 BEHAVIORAL MEMORY INSIGHT (KILLER FEATURE) -->
+    {% if behavior_memory %}
+    <div class="report-section info-box">
+        <h3>🧠 Behavioral Memory Insight</h3>
+        <p>
+            {{ behavior_memory }}
+        </p>
+        <p class="hint-text">
+            This insight is generated from your own past financial improvements.
+        </p>
+    </div>
+    {% endif %}
+
+    <!-- SCORE BREAKDOWN -->
+    <div class="report-section">
+        <h3>Score Breakdown</h3>
+        <ul>
+            {% for key, value in breakdown.items() %}
+                <li>{{ key }}: {{ value }} points</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- VISUAL FINANCIAL ANALYSIS -->
+    <div class="report-section">
+        <h3>Visual Financial Analysis</h3>
+
+        <p class="report-note">
+            The following charts provide a visual interpretation of income usage,
+            expense structure, and savings behavior for the selected month.
+        </p>
+
+        <div class="chart-block">
+            <h4>Income vs Savings & Expenses</h4>
+            <img src="{{ url_for('static', filename='plots/savings_vs_expenses.png') }}"
+                 alt="Savings vs Expenses Chart">
+        </div>
+
+        <div class="chart-block">
+            <h4>Expense Distribution</h4>
+            <img src="{{ url_for('static', filename='plots/expense_split.png') }}"
+                 alt="Expense Split Chart">
+        </div>
+    </div>
+
+    <p class="hint-text">
+        📌 Graph annotations explain <em>why</em> your readiness score changed,
+        not just what the score is.
+    </p>
+
+    <!-- WHAT-IF ANALYSIS -->
+    <div class="report-section">
+        <h3>Behavioral Impact Analysis</h3>
+
+        {% for scenario in what_if_results %}
+            <p>
+                If variable expenses are reduced by approximately
+                <strong>₹{{ scenario.reduction_amount }}</strong>
+                ({{ scenario.percent }}%):
+            </p>
+            <p>
+                Revised Score: <strong>{{ scenario.score }}/100</strong><br>
+                Revised Level: <strong>{{ scenario.level }}</strong>
+            </p>
+            <hr>
+        {% endfor %}
+
+        <p class="hint-text">
+            Note: Score improvements occur only when key financial thresholds are crossed.
+        </p>
+    </div>
+
+    <!-- DOWNLOAD -->
+    <div class="report-section">
+        <form action="/download_report" method="post">
+            <input type="hidden" name="report_text" value="{{ report_text }}">
+            <button type="submit">Download Evaluation Report</button>
+        </form>
+    </div>
+
+    <!-- FOOTER NAV -->
+    <div class="report-section report-footer">
+        <a href="/history">View Evaluation History</a> |
+        <a href="/dashboard">Run Another Assessment</a>
+    </div>
+
+    <!-- SCORE EXPLANATION -->
+    <div class="report-section">
+        <h3>How Your Readiness Score Was Calculated</h3>
+        <p>
+            Your score is derived from income stability, expense balance,
+            savings discipline, and emergency preparedness.
+        </p>
+
+        <ul style="font-size:14px;">
+            <li>✔ Income vs expenses ratio</li>
+            <li>✔ Savings consistency</li>
+            <li>✔ Emergency fund availability</li>
+            <li>✔ Behavioral resistance patterns</li>
+        </ul>
+
+        <p style="font-size:13px; color:#666;">
+            No personal data is shared or used beyond this evaluation.
+        </p>
+    </div>
+
+</div>
+
+</body>
+</html>
